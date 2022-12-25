@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>登陆 - 网爵科技</title>
+<link rel="shortcut icon" href="https://q.qlogo.cn/g?b=qq&nk=923405732&s=640">
+<link rel="apple-touch-icon" href="https://q.qlogo.cn/g?b=qq&nk=923405732&s=640">
+<meta name='robots' content='noindex,nofollow'> 
+<meta name='robots' content='max-image-preview:large'>
+<link rel="stylesheet" href="static/css/iconfont.css" type="text/css"><link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css"><link rel="stylesheet" href="static/css/login.css" type="text/css"><script type="text/javascript" src="static/js/jquery.min.js"></script><script src="static/js/TCaptcha.js"></script><style type="text/css">.login_button {line-height:38px;border-radius:3px;cursor:pointer;color:#fff;background:#f1404b;border:2px solid #f1404b;font-size:14px;margin-bottom:20px;text-align:center;transition:.5s;}.login_button:hover{color:#fff;background:#111;border-color:#111;}</style><style type="text/css">#login form {-webkit-box-shadow:0 2px 5px 0 rgba(146,146,146,.1);-moz-box-shadow:0 2px 5px 0 rgba(146,146,146,.1);box-shadow:0 8px 25px 0 rgba(146,146,146,0.21);}#login form .forgetmenot{float:none}
+    .login #login_error, .login .message, .login .success {border-left: 4px solid #f1404b;box-shadow: 0 5px 10px 0 rgba(146,146,146,0.21);}
+    #login form p.submit{padding: 20px 0 0;}#login form p.submit .button-primary{float:none;background-color: #f1404b;font-weight: bold;color: #fff;width: 100%;height: 40px;border-width: 0;text-shadow: none!important;border-color:none;transition: .5s;}#login form input{box-shadow:none!important;outline:none!important}
+    #login form p.submit .button-primary:hover{background-color: #444;}</style><style type="text/css">
+        .login h1 a { background-image:url(static/image/logo-dark_collapsed@2x.png);max-width:280px;background-position: center;}
+        </style><style> 
+:root {
+--bg-color-l: #181d23;
+--bg-color-r: #3c3e42;
+}
+</style>
+</head>
+<body class="">
+    <div class="page login-page">
+        <div class="container d-flex align-items-center">
+            <div class="form-holder has-shadow">
+                <div class="row no-gutters">
+                    <!-- Logo & Information Panel-->
+                    <div class="col-md-6 col-lg-7 col-xl-8 my-n5 d-none d-md-block">
+                        <div class="info d-flex p-5 mr-n5 position-relative login-img rounded-xl shadow-lg" style="background-image: url(static/image/login.jpg);">
+                            <div class="content position-absolute mr-5 pr-5">
+                                <div class="logo">
+                                    <h1>网爵科技</h1>
+                                </div>
+                                <p>员工管理系统</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Form Panel    -->
+                    <div class="col-12 col-md-6 col-lg-5 col-xl-4 bg-white rounded-xl shadow-lg">
+                        <div class="form d-flex align-items-center p-4 p-md-5">
+                            <div class="content">
+                                <div class="sign-header h4 mb-3 mb-md-4">欢迎回来</div>
+                                <div id="result" style="color:#f1404b;height:30px"></div>
+                                <form method="post" action="" class="form-validate mb-3" id="wp_login_form">
+                                    <input type="hidden" name="action" value="user_login">
+                                    <div class="form-group mb-4">
+                                        <input type="text" name="username" placeholder="工号" class="input-material">
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <input type="password" name="password" placeholder="密码" class="input-material">
+                                    </div> 
+                                    <div class="custom-control custom-checkbox mb-4">
+                                        <input type="checkbox" class="custom-control-input" checked="checked" name="rememberme" id="check1" value="forever">
+                                        <label class="custom-control-label" for="check1">记住我的登录信息</label>
+                                    </div> 
+                                    <input type="hidden" name="redirect_to" value=""> 
+                                    <div class="d-flex">
+                                                                                <input type="hidden" id="wp007_tcaptcha" name="tcaptcha_007" value="">
+                                        <input type="hidden" id="wp007_ticket" name="tencent_ticket" value="">
+                                        <input type="hidden" id="wp007_randstr" name="tencent_randstr" value="">
+                                        <input class="btn btn-danger btn-block" type="button" id="TencentCaptcha" value="登录" data-appid="2086181704" data-cbfn="loginTicket">
+                                         
+                                      <a href="javascript:window.open('https://7zz.cn/');" class="btn btn-outline-danger btn-block mt-0 ml-4">首页</a>
+                                          </div> 
+                                      
+                                                   </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright my-4">
+            <div class="text-white-50 text-center">
+                <small>Copyright © <a href="javascript:window.open('https://7zz.cn/');" class="text-white-50" title="网爵科技" rel="home">网爵科技</a></small> | <a href="https://beian.miit.gov.cn" class="text-muted" target="_blank">豫ICP备2021018473号-3</a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">//ajax 提交数据 
+        $("#wp_login_form").submit(function() { 
+            $('#result').html('<i class="loader iconfont icon-loading icon-spin icon-2x"></i>').fadeIn();
+            var input_data = $('#wp_login_form').serialize(); 
+            $.ajax({
+                type: "POST",
+                url: "https://7zz.cn/wp-admin/admin-ajax.php",
+                data: input_data,
+                dataType: "json",
+                success: function(m){
+                    if(m.status == 1){
+                        $('div#result').html('').css('color','#2ac12a');
+                        $('<div>').html("<i class='iconfont icon-smiley mr-2'></i>"+m.msg).appendTo('div#result').hide().fadeIn('slow');
+                        window.location.href = m.goto; 
+                        window.location.reload;
+                    }else{
+                        $('div#result').html('');
+                        $('<div>').html("<i class='iconfont icon-crying mr-2'></i>"+m.msg).appendTo('div#result').hide().fadeIn('slow');
+                    }
+                },
+                error: function () {
+                    $('div#result').html('');
+                    $('<div>').html("网络错误").appendTo('div#result').hide().fadeIn('slow');
+                }
+            });
+            return false;
+        });  
+    </script>
+
+</body>
+</html>
+<!-- Cached by WP-Optimize (gzip) - https://getwpo.com - Last modified: Mon, 28 Nov 2022 19:23:45 GMT -->
